@@ -40,6 +40,11 @@ fprintf('  Waterline MSE: %.6f\n\n', waterlineMSE);
 fprintf('Step 4: Generating fitted surface...\n');
 figure('Name', 'Standard B-Spline Surface Visualization', 'Position', [50 50 800 600]);
 [u, v, w] = BSplineSurf(cpX, cpY, cpZ);
+hold on;
+plot3(cpX, cpY, cpZ, 'k-', 'LineWidth', 1.2);      % control net (station direction)
+plot3(cpX', cpY', cpZ', 'k-', 'LineWidth', 1.2);    % control net (waterline direction)
+plot3(cpX, cpY, cpZ, 'ko', 'MarkerSize', 5, 'MarkerFaceColor', 'k');
+hold off;
 view([-90 -4]);
 axis equal;
 title('Standard B-Spline Surface Fit');

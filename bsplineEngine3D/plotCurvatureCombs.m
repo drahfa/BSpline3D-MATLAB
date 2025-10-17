@@ -46,6 +46,7 @@ p.addParameter('CombLineWidth', 1.5, @(x) isnumeric(x) && isscalar(x) && x > 0);
 p.addParameter('CombColormap', parula(256), @(x) isnumeric(x) && size(x, 2) == 3);
 p.addParameter('ShowEnvelope', true, @(x) islogical(x) && isscalar(x));
 p.addParameter('EnvelopeColor', [0.8 0.15 0.15], @(x) isnumeric(x) && numel(x) == 3);
+p.addParameter('IncludeEdges', true, @(x) islogical(x) && isscalar(x));
 % Backwards-compatibility alias for legacy 'Spacing' parameter
 p.addParameter('Spacing', [], @(x) isempty(x) || (isscalar(x) && x >= 1));
 p.parse(varargin{:});
@@ -124,16 +125,38 @@ title('Curvature Combs (Normals Scaled by Gaussian Curvature)');
             end
 
             curveIdx = args.CurveIndices;
+            interiorStart = 2;
+            interiorEnd = primaryLen - 1;
+
             if isempty(curveIdx)
-                numCurves = min(primaryLen, max(1, round(args.NumCurves)));
-                if numCurves < 1
-                    return;
+                interiorCount = max(0, interiorEnd - interiorStart + 1);
+                curveIdx = [];
+                if interiorCount > 0
+                    numCurves = min(interiorCount, max(1, round(args.NumCurves)));
+                    if numCurves == 1
+                        curveIdx = round((interiorStart + interiorEnd) / 2);
+                    else
+                        interiorSamples = linspace(interiorStart, interiorEnd, numCurves);
+                        curveIdx = unique(round(interiorSamples));
+                    end
                 end
-                idx = linspace(2, primaryLen - 1, numCurves + 2);
-                curveIdx = unique(round(idx(2:end-1)));
             else
                 curveIdx = unique(round(curveIdx));
-                curveIdx = curveIdx(curveIdx >= 2 & curveIdx <= primaryLen - 1);
+                if args.IncludeEdges
+                    keepMask = curveIdx >= 1 & curveIdx <= primaryLen;
+                else
+                    keepMask = curveIdx >= interiorStart & curveIdx <= interiorEnd;
+                end
+                curveIdx = curveIdx(keepMask);
+            end
+
+            if args.IncludeEdges && primaryLen >= 1
+                curveIdx = unique([curveIdx(:); 1; primaryLen]); %#ok<AGROW>
+            end
+
+            curveIdx = curveIdx(:)';
+            if isempty(curveIdx)
+                return;
             end
 
             combSpacing = args.CombSpacing;
