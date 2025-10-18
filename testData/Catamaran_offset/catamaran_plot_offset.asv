@@ -1,0 +1,32 @@
+x_hull_in = load('catamaran_offset_x_hull_in.dat');
+y_hull_in = load('catamaran_offset_y_hull_in.dat');
+z_hull_in = load('catamaran_offset_z_hull_in.dat');
+
+x_hull_out = load('catamaran_offset_x_hull_out.dat');
+y_hull_out = load('catamaran_offset_y_hull_out.dat');
+z_hull_out = load('catamaran_offset_z_hull_out.dat');
+
+x_top_in = load('catamaran_offset_x_top_in.dat');
+y_top_in = load('catamaran_offset_y_top_in.dat');
+z_top_in = load('catamaran_offset_z_top_in.dat');
+
+x_top_out = load('catamaran_offset_x_top_out.dat');
+y_top_out = load('catamaran_offset_y_top_out.dat');
+z_top_out = load('catamaran_offset_z_top_out.dat');
+
+
+figure; hold on;
+for i=1:length(x_top)
+    plot3(x_top(i,:),y_top(i,:),z_top(i,:),'r.'); 
+    plot3(x_mid(i,:),y_mid(i,:),z_mid(i,:),'b.'); 
+    plot3(x_bot(i,:),y_bot(i,:),z_bot(i,:),'k.'); 
+    plot3(x_bot(i,:),y_bot(i,:),z_bot(i,:),'k.'); 
+%     pause(1)
+end
+
+figure; hold on;
+j = 11;
+plot(y_top(j,:),z_top(j,:),'r.')
+plot(y_mid(j,:),z_mid(j,:),'b.')
+plot(y_bot(j,:),z_bot(j,:),'k.')
+axis equal

@@ -1,0 +1,34 @@
+x_top = load('wpb_offset_top_x.dat');
+y_top = load('wpb_offset_top_y.dat');
+z_top = load('wpb_offset_top_z.dat');
+
+x_mid = load('wpb_offset_mid_x.dat');
+y_mid = load('wpb_offset_mid_y.dat');
+z_mid = load('wpb_offset_mid_z.dat');
+
+x_bot = load('wpb_offset_bottom_x.dat');
+y_bot = load('wpb_offset_bottom_y.dat');
+z_bot = load('wpb_offset_bottom_z.dat');
+
+
+figure; hold on;
+for i=1:length(x_top)
+    plot3(x_top(i,:),y_top(i,:),z_top(i,:),'r.'); 
+    plot3(x_mid(i,:),y_mid(i,:),z_mid(i,:),'b.'); 
+    plot3(x_bot(i,:),y_bot(i,:),z_bot(i,:),'k.'); 
+%     pause(1)
+end
+
+figure; hold on;
+j = 11;
+plot(y_top(j,:),z_top(j,:),'r.')
+plot(y_mid(j,:),z_mid(j,:),'b.')
+plot(y_bot(j,:),z_bot(j,:),'k.')
+axis equal
+
+temp = [];
+id = 1;
+for k = 1:21
+    tem
+    id = id+1;
+end

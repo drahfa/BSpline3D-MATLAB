@@ -17,7 +17,6 @@ for candidate = dataDirCandidates
 end
 
 addpath(fullfile(scriptDir, 'sandBox'));
-addpath(fullfile(scriptDir, 'optimization'));
 addpath(fullfile(scriptDir, 'bsplineEngine3D'));
 
 fprintf('bsplines3D paths configured successfully for %s\n', computer);
